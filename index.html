@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/icon" href="/favicon-32x32.png">
+  <title>Countdown Timer with Sound</title>
+  <style>
+    body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        object-fit: cover;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+       background-image: url("https://img.freepik.com/premium-photo/abstract-design-featuring-robotic-circuits-gears-merging-into-digital-pattern_1310094-60097.jpg?w=740");
+    }
+    .container {
+        text-align: center;
+        background-color:#ffffff8c;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px black;
+    }
+    input, button {
+        padding: 10px;
+        font-size: 16px;
+        border-radius: 5px;
+        border: 2px solid ;
+        margin: 5px;
+    }
+    input {
+        width: 80px;
+    }
+    button {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #0056b3;
+    }
+    #timer {
+        font-size: 24px;
+        margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Countdown Timer</h1>
+    <input type="number" id="timeInput" placeholder="Seconds">
+    <button onclick="startTimer()">Start</button>
+    <div id="timer"></div>
+    <audio id="beep" src="beep.mp3"></audio> 
+  </div>
+
+  <script>
+    function startTimer() {
+       
+        clearInterval(window.countdown);
+
+        const input = document.getElementById('timeInput').value;
+        let time = parseInt(input);
+
+        if (isNaN(time) || time <= 0) {
+            alert('Enter a valid number greater than 0.');
+            return;
+        }
+
+        const timerDisplay = document.getElementById('timer');
+        const beep = document.getElementById('beep'); 
+        timerDisplay.textContent = time;
+
+        beep.currentTime = 0;
+        beep.play();
+
+        window.countdown = setInterval(() => {
+            time--;
+
+            beep.currentTime = 0;
+            beep.play();
+
+            if (time <= 0) {
+                clearInterval(window.countdown);
+                timerDisplay.textContent = "Time's up!";
+            } else {
+                timerDisplay.textContent = time;
+            }
+        }, 1000);
+    }
+  </script>
+</body>
+</html>
+
